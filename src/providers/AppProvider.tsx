@@ -1,4 +1,6 @@
-import React, {createContext, useContext} from 'react'
+import React, {createContext} from 'react'
+import { useMachine } from '@xstate/react';
+import appMachine from '../machines/AppMachine'
 
 interface AppContextProps {
     send?: any,
@@ -12,7 +14,12 @@ interface AppProviderProps {
 export const AppContext = createContext<AppContextProps>({})
 
 const AppProvider: React.FC<AppProviderProps> = ({children}) => {
-    return <AppContext.Provider value={{}}>
+
+    const [current, send] = useMachine(appMachine, {
+        devTools:true
+    })
+
+    return <AppContext.Provider value={{current, send}}>
        {children}
     </AppContext.Provider>
 }
