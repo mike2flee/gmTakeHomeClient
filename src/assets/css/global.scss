@@ -1,0 +1,12 @@
+$box-shadow: 2px 2px 3px #c6c6c6;
+$text-color: #20252e;
+
+.hoverStyle {
+  transform: scale(1.1);
+  transition: transform 0.4s;
+}
+
+.activeClickStyle {
+  transform: scale(0.8);
+  transition: transform 0.2s;
+}

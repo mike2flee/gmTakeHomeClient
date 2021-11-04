@@ -1,3 +1,6 @@
+@import "./global.scss";
+@import "components/searchBar";
+
 * {
   margin: 0;
   padding: 0;
@@ -22,9 +25,9 @@
 
 .landingPageContainer {
   display: flex;
-  background-color: chartreuse;
+  background-color: white;
   flex-direction: column;
-  padding: 20px;
+  padding: 40px;
   padding-top: 40px;
 
   .optionRow {
@@ -32,5 +35,15 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    .addIcon {
+      height: 50px;
+    }
+    .addIcon:hover {
+      @extend .hoverStyle;
+    }
+    .addIcon:active {
+      @extend .activeClickStyle;
+    }
   }
 }

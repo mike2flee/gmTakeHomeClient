@@ -31,7 +31,7 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
     states: {
       idle: {
         on: {
-          TOGGLE_MODAL: { actions: "toggleModal" },
+          TOGGLE_MODAL: { actions: ['toggleModal']},
           FIND_BY_CLIENT_NAME: {
             target: "findingByClient",
           },
@@ -88,7 +88,7 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
         const e = event as DoneEvent;
         toast.success(e.data.statusMessage);
       },
-      toggleModal: (context, event) => {
+      toggleModal: assign((context, event) => {
         const e = event as ToggleModal;
         return {
           ...context,
@@ -96,7 +96,7 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
           modalData: e.modalData,
           titile: e.title,
         };
-      },
+      }),
     },
   }
 );
