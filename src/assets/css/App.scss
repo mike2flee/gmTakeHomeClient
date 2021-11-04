@@ -49,4 +49,15 @@
       @extend .activeClickStyle;
     }
   }
+  .loadingContainer {
+    display: flex;
+    height: 500px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  .filter-green {
+    filter: invert(46%) sepia(26%) saturate(4782%) hue-rotate(163deg)
+      brightness(97%) contrast(103%);
+  }
 }

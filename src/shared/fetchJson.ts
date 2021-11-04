@@ -25,5 +25,8 @@ const baseFetchJson = (url: string, config = {}) =>
             throw new Error(errorMessage);
 
         }
-        return json;
+
+            return json;
+       
+      
     });
