@@ -3,6 +3,7 @@ import SearchBar from "../../componets/SearchBar";
 import { AppContext } from "../../providers/AppProvider";
 import addIcon from "../../assets/images/addIcon.png";
 import ClientInstaceModal from "../../componets/ClientInstaceModal";
+import Table from "../../componets/Table";
 
 const LandingPage = () => {
   const { current, send } = useContext(AppContext);
@@ -19,8 +20,9 @@ const LandingPage = () => {
             send("TOGGLE_MODAL", { title: "Add Entity", modalData: {} })
           }
         />
-        <ClientInstaceModal current={current} send={send}></ClientInstaceModal>
       </div>
+      <Table current={current} send={send}></Table>
+      <ClientInstaceModal current={current} send={send}></ClientInstaceModal>
     </div>
   );
 };
