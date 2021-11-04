@@ -2,7 +2,35 @@
   margin: 0;
   padding: 0;
 }
-.appContainer {
-  background-color: chartreuse;
+.mainHeader {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  gap: 20px;
+  background-color: #1f5673;
   padding: 20px;
+
+  img {
+    width: 40px;
+    height: 40px;
+  }
+
+  h1 {
+    color: white;
+  }
+}
+
+.landingPageContainer {
+  display: flex;
+  background-color: chartreuse;
+  flex-direction: column;
+  padding: 20px;
+  padding-top: 40px;
+
+  .optionRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
