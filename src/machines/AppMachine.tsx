@@ -1,4 +1,5 @@
 import {createMachine, assign, DoneEvent} from 'xstate'
+import {  toast } from 'react-toastify';
 import { fetchJson } from '../shared/fetchJson';
 
 type AppEvents = GetAllTimeSheetData;
@@ -22,9 +23,12 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>({
                 src:'getAllClientInstances',
                 onDone:{
                     target: 'idle',
-                    actions: 'setClientInstance'
+                    actions: ['setClientInstance', 'flashSuccess']
                 },
-                onError:''
+                onError:{
+                    target: 'idle',
+                    actions: 'flashSuccess'
+                }
             }
         },
         failed:{
@@ -39,7 +43,15 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>({
         setClientInstance: assign((context, event) => {
             const e = event as DoneEvent;
             return{...context, timeSheetData: e.data.clientInstancePojoList}
-        })  
+        }),
+        flashError: ((context, event) => {
+            const e = event as DoneEvent;
+            toast.error(e.data.statusMessage)
+        }),
+        flashSuccess: ((context, event) => {
+            const e = event as DoneEvent;
+            toast.success(e.data.statusMessage)
+        })
     }
 })
 
