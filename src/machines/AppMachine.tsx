@@ -6,7 +6,8 @@ type AppEvents =
   | GetAllTimeSheetData
   | FindByClientName
   | ClosingModal
-  | ToggleModal;
+  | ToggleModal
+  | UpdateCreateForm;
 
 interface AppMachineContextProps {
   timeSheetData: any;
@@ -32,6 +33,7 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
       idle: {
         on: {
           TOGGLE_MODAL: { actions: ["toggleModal"] },
+          UPDATE_CREATE_FORM: { actions: ["updateCreateForm"] },
           FIND_BY_CLIENT_NAME: {
             target: "findingByClient",
           },
@@ -100,6 +102,11 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
           modalTitle: e.title,
         };
       }),
+      updateCreateForm: assign((context, event) => {
+        const { field, value } = event as UpdateCreateForm;
+        const updatedData = { ...context.modalData, [`${field}`]: value };
+        return { ...context, modalData: updatedData };
+      }),
     },
   }
 );
@@ -116,3 +123,9 @@ type FindByClientName = {
 type ClosingModal = { type: "CLOSE" };
 
 type ToggleModal = { type: "TOGGLE_MODAL"; modalData: any; title: String };
+
+type UpdateCreateForm = {
+  type: "UPDATE_CREATE_FORM";
+  field: String;
+  value: any;
+};
