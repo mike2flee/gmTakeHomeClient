@@ -1,4 +1,5 @@
-import {createMachine} from 'xstate'
+import {createMachine, assign, DoneEvent} from 'xstate'
+import { fetchJson } from '../shared/fetchJson';
 
 type AppEvents = GetAllTimeSheetData;
 
@@ -12,10 +13,33 @@ const intialContext: AppMachineContextProps = {
 
 const appMachine = createMachine<AppMachineContextProps, AppEvents>({
     id: 'appMachine',
-    initial:'idle',
+    initial:'fetchingData',
     context: intialContext,
     states:{
-        idle:{}
+        idle:{},
+        fetchingData: {
+            invoke:{
+                src:'getAllClientInstances',
+                onDone:{
+                    target: 'idle',
+                    actions: 'setClientInstance'
+                },
+                onError:''
+            }
+        },
+        failed:{
+
+        }
+    }
+},{
+    services: {
+        getAllClientInstances: () => fetchJson('http://localhost:8080/timesheetApi/getAll')
+    },
+    actions:{
+        setClientInstance: assign((context, event) => {
+            const e = event as DoneEvent;
+            return{...context, timeSheetData: e.data.clientInstancePojoList}
+        })  
     }
 })
 
