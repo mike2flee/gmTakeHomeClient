@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import { BallTriangle } from "react-loading-icons";
 import BillingSummary from "./BillingSummary";
@@ -17,15 +17,34 @@ const Table: React.FC<TableProps> = ({ current, send }) => {
     sortable: true,
   };
 
+  const [tableData, setTableData] = useState(current.context.timeSheetData);
+
+  useEffect(() => {
+    if (current.context.privateMode) {
+      const privateList: any = [];
+      const listCopy = JSON.parse(
+        JSON.stringify(current.context.timeSheetData)
+      );
+
+      listCopy.forEach((instance: any) => {
+        instance.billableAmount = "$xx,xxx.00";
+        privateList.push(instance);
+      });
+      setTableData(privateList);
+    } else {
+      setTableData(current.context.timeSheetData);
+    }
+  }, [current.context.privateMode, current.context.timeSheetData]);
+
   const renderTable = () => {
     return (
       <div className="tableContainer ag-theme-alpine">
-        <BillingSummary />
+        <BillingSummary send={send} current={current} />
         <AgGridReact
           onRowDoubleClicked={(e) =>
             send("TOGGLE_MODAL", { title: "Entity Details", modalData: e.data })
           }
-          rowData={current.context.timeSheetData}
+          rowData={tableData}
           defaultColDef={defaultColDef}
         >
           <AgGridColumn field="project"></AgGridColumn>

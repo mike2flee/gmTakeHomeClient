@@ -10,7 +10,8 @@ type AppEvents =
   | ToggleModal
   | UpdateCreateForm
   | CreateClientInstance
-  | GetAll;
+  | GetAll
+  | TogglePrivateMode;
 
 interface AppMachineContextProps {
   timeSheetData: any;
@@ -18,14 +19,20 @@ interface AppMachineContextProps {
   modalData?: any;
   modalTitle: String;
   shouldReset?: boolean;
+  privateMode: boolean;
+  totalBillableAmount: String;
+  totalHoursTracked: String;
 }
 
 const intialContext: AppMachineContextProps = {
-  timeSheetData: [],
   isModalOpen: false,
-  modalData: {},
   modalTitle: "",
   shouldReset: false,
+  privateMode: false,
+  totalBillableAmount: "$-",
+  totalHoursTracked: "-",
+  modalData: {},
+  timeSheetData: [],
 };
 
 const appMachine = createMachine<AppMachineContextProps, AppEvents>(
@@ -47,6 +54,10 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
           },
           GET_ALL: {
             target: "fetchingData",
+            actions: ["togglePrivateMode"],
+          },
+          TOGGLE_PRIVATE_MODE: {
+            actions: ["togglePrivateMode"],
           },
         },
       },
@@ -113,6 +124,8 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
     },
     actions: {
       setClientInstance: assign((context, event) => {
+        let totalBillableAmount = 0;
+        let totalHoursTracked = 0;
         const formattedClientInstances: any = [];
         const e = event as DoneEvent;
         e.data.clientInstancePojoList.forEach((instance: any) => {
@@ -121,6 +134,9 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
             instance.billableAmount = `$ ${formatCurrency(
               parseFloat(instance.hours) * parseFloat(instance.billingRate)
             )}`;
+            totalHoursTracked += parseFloat(instance.hours);
+            totalBillableAmount +=
+              parseFloat(instance.hours) * parseFloat(instance.billingRate);
           } else {
             instance.billableHours = "0";
             instance.billableAmount = "_";
@@ -131,6 +147,8 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
           ...context,
           timeSheetData: formattedClientInstances,
           shouldReset: false,
+          totalBillableAmount: `$ ${formatCurrency(totalBillableAmount)}`,
+          totalHoursTracked: `${formatCurrency(totalHoursTracked)}`,
         };
       }),
       flashError: (context, event) => {
@@ -155,6 +173,11 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
         const { field, value } = event as UpdateCreateForm;
         const updatedData = { ...context.modalData, [`${field}`]: value };
         return { ...context, modalData: updatedData };
+      }),
+      togglePrivateMode: assign((context, event) => {
+        const { privateMode, strict } = event as TogglePrivateMode;
+        const reducePrivateBool = strict ? privateMode : false;
+        return { ...context, privateMode: reducePrivateBool };
       }),
     },
   }
@@ -185,3 +208,9 @@ type CreateClientInstance = {
 };
 
 type GetAll = { type: "GET_ALL" };
+
+type TogglePrivateMode = {
+  type: "TOGGLE_PRIVATE_MODE";
+  privateMode?: boolean;
+  strict?: boolean;
+};
