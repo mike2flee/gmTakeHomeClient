@@ -41,7 +41,16 @@ const ClientInstaceModal: React.FC<ClientInstaceModalProps> = ({
             >
               CANCEL
             </Button>
-            <Button variant="primary">ADD</Button>
+            <Button
+              variant="primary"
+              onClick={() =>
+                send("CREATE_NEW_INSTANCE", {
+                  request: current.context.modalData,
+                })
+              }
+            >
+              ADD
+            </Button>
           </>
         ) : (
           <>

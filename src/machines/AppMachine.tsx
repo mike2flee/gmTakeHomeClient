@@ -7,13 +7,16 @@ type AppEvents =
   | FindByClientName
   | ClosingModal
   | ToggleModal
-  | UpdateCreateForm;
+  | UpdateCreateForm
+  | CreateClientInstance
+  | GetAll;
 
 interface AppMachineContextProps {
   timeSheetData: any;
   isModalOpen: boolean;
   modalData?: any;
   modalTitle: String;
+  shouldReset?: boolean;
 }
 
 const intialContext: AppMachineContextProps = {
@@ -21,6 +24,7 @@ const intialContext: AppMachineContextProps = {
   isModalOpen: false,
   modalData: {},
   modalTitle: "",
+  shouldReset: false,
 };
 
 const appMachine = createMachine<AppMachineContextProps, AppEvents>(
@@ -36,6 +40,12 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
           UPDATE_CREATE_FORM: { actions: ["updateCreateForm"] },
           FIND_BY_CLIENT_NAME: {
             target: "findingByClient",
+          },
+          CREATE_NEW_INSTANCE: {
+            target: "creatingNewClient",
+          },
+          GET_ALL: {
+            target: "fetchingData",
           },
         },
       },
@@ -65,6 +75,19 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
           },
         },
       },
+      creatingNewClient: {
+        invoke: {
+          src: "creatingNewClientRow",
+          onDone: {
+            target: "fetchingData",
+            actions: ["toggleModal"],
+          },
+          onError: {
+            target: "idle",
+            actions: ["flashError"],
+          },
+        },
+      },
       failed: {},
     },
   },
@@ -77,6 +100,13 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
         return fetchJson("http://localhost:8080/timesheetApi/findByClient", {
           method: "POST",
           body: JSON.stringify(request),
+        });
+      },
+      creatingNewClientRow: (context, event) => {
+        const { request } = event as CreateClientInstance;
+        return fetchJson("http://localhost:8080/timesheetApi/create", {
+          method: "POST",
+          body: JSON.stringify({ clientInstance: request }),
         });
       },
     },
@@ -95,7 +125,11 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
           }
           formattedClientInstances.push(instance);
         });
-        return { ...context, timeSheetData: formattedClientInstances };
+        return {
+          ...context,
+          timeSheetData: formattedClientInstances,
+          shouldReset: false,
+        };
       }),
       flashError: (context, event) => {
         const e = event as DoneEvent;
@@ -142,3 +176,10 @@ type UpdateCreateForm = {
   field: String;
   value: any;
 };
+
+type CreateClientInstance = {
+  type: "CREATE_NEW_INSTANCE";
+  request: { clientInstance: any };
+};
+
+type GetAll = { type: "GET_ALL" };

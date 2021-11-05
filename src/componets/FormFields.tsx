@@ -112,7 +112,7 @@ const FormFields: React.FC<FormFieldsProps> = ({
             variant="success"
             id="dropdown-basic"
           >
-            {current.context.modalData.isBillable}
+            {current.context?.modalData?.isBillable}
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
