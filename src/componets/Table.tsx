@@ -1,6 +1,7 @@
 import React from "react";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import { BallTriangle } from "react-loading-icons";
+import BillingSummary from "./BillingSummary";
 
 interface TableProps {
   current: any;
@@ -19,6 +20,7 @@ const Table: React.FC<TableProps> = ({ current, send }) => {
   const renderTable = () => {
     return (
       <div className="tableContainer ag-theme-alpine">
+        <BillingSummary />
         <AgGridReact
           onRowDoubleClicked={(e) =>
             send("TOGGLE_MODAL", { title: "Entity Details", modalData: e.data })

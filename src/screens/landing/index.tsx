@@ -11,7 +11,7 @@ const LandingPage = () => {
   return (
     <div className="landingPageContainer">
       <div className="optionRow">
-        <SearchBar current={current} send={send}></SearchBar>
+        <SearchBar current={current} send={send} />
         <img
           className="addIcon"
           src={addIcon}
@@ -21,8 +21,8 @@ const LandingPage = () => {
           }
         />
       </div>
-      <Table current={current} send={send}></Table>
-      <ClientInstaceModal current={current} send={send}></ClientInstaceModal>
+      <Table current={current} send={send} />
+      <ClientInstaceModal current={current} send={send} />
     </div>
   );
 };

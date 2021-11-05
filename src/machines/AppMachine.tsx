@@ -121,7 +121,7 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
               parseFloat(instance.hours) * parseFloat(instance.billingRate);
           } else {
             instance.billableHours = 0;
-            instance.billableAmount = 0 * parseFloat(instance.billingRate);
+            instance.billableAmount = 0;
           }
           formattedClientInstances.push(instance);
         });

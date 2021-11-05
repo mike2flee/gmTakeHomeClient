@@ -12,7 +12,7 @@ const App = () => {
     <AppProvider>
       <HashRouter>
         <>
-          <ToastContainer />
+          <ToastContainer autoClose={4000} />
           <Switch>
             <Route exact path="/" component={LandingPage}></Route>
           </Switch>

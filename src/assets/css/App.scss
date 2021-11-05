@@ -1,9 +1,9 @@
 @import "~bootstrap/scss/bootstrap";
 @import "./global.scss";
-
 @import "components/searchBar";
 @import "components/table";
 @import "components/modal";
+@import "components/billingSummary";
 
 * {
   margin: 0;
