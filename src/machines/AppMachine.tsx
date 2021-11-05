@@ -17,7 +17,7 @@ interface AppMachineContextProps {
 }
 
 const intialContext: AppMachineContextProps = {
-  timeSheetData: {},
+  timeSheetData: [],
   isModalOpen: false,
   modalData: {},
   modalTitle: "",
@@ -56,7 +56,8 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
         invoke: {
           src: "findClientByName",
           onDone: {
-            target: "fetchingData",
+            target: "idle",
+            actions: ["setClientInstance"],
           },
           onError: {
             target: "idle",
@@ -81,8 +82,20 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
     },
     actions: {
       setClientInstance: assign((context, event) => {
+        const formattedClientInstances: any = [];
         const e = event as DoneEvent;
-        return { ...context, timeSheetData: e.data.clientInstancePojoList };
+        e.data.clientInstancePojoList.forEach((instance: any) => {
+          if (instance.isBillable === "Yes") {
+            instance.billableHours = instance.hours;
+            instance.billableAmount =
+              parseFloat(instance.hours) * parseFloat(instance.billingRate);
+          } else {
+            instance.billableHours = 0;
+            instance.billableAmount = 0 * parseFloat(instance.billingRate);
+          }
+          formattedClientInstances.push(instance);
+        });
+        return { ...context, timeSheetData: formattedClientInstances };
       }),
       flashError: (context, event) => {
         const e = event as DoneEvent;

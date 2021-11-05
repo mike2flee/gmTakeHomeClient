@@ -4,14 +4,20 @@ import { InputGroup, Dropdown } from "react-bootstrap";
 interface FormFieldsProps {
   current: any;
   send: any;
+  isViewOnly: boolean;
 }
 
-const FormFields: React.FC<FormFieldsProps> = ({ current, send }) => {
+const FormFields: React.FC<FormFieldsProps> = ({
+  current,
+  send,
+  isViewOnly,
+}) => {
   return (
     <>
       <InputGroup className="mb-3 inputf">
         <InputGroup.Text id="basic-addon1">Client</InputGroup.Text>
         <input
+          disabled={isViewOnly}
           type="text"
           className="form-control"
           value={current.context?.modalData?.client}
@@ -26,6 +32,7 @@ const FormFields: React.FC<FormFieldsProps> = ({ current, send }) => {
       <InputGroup className="mb-3 inputf">
         <InputGroup.Text id="basic-addon1">Project Code</InputGroup.Text>
         <input
+          disabled={isViewOnly}
           type="text"
           className="form-control"
           value={current?.context?.modalData?.projectCode}
@@ -40,9 +47,10 @@ const FormFields: React.FC<FormFieldsProps> = ({ current, send }) => {
       <InputGroup className="mb-3 inputf">
         <InputGroup.Text id="basic-addon1">Project</InputGroup.Text>
         <input
+          disabled={isViewOnly}
           type="text"
           className="form-control"
-          value={current?.current?.modalData?.project}
+          value={current?.context?.modalData?.project}
           onChange={(e) =>
             send("UPDATE_CREATE_FORM", {
               field: "project",
@@ -54,9 +62,10 @@ const FormFields: React.FC<FormFieldsProps> = ({ current, send }) => {
       <InputGroup className="mb-3 inputf">
         <InputGroup.Text id="basic-addon1">Date</InputGroup.Text>
         <input
+          disabled={isViewOnly}
           type="date"
           className="form-control"
-          value={current?.current?.modalData?.date}
+          value={current?.conext?.modalData?.date}
           onChange={(e) =>
             send("UPDATE_CREATE_FORM", {
               field: "date",
@@ -68,9 +77,10 @@ const FormFields: React.FC<FormFieldsProps> = ({ current, send }) => {
       <InputGroup className="mb-3 inputf">
         <InputGroup.Text id="basic-addon1">First Name</InputGroup.Text>
         <input
+          disabled={isViewOnly}
           type="text"
           className="form-control"
-          value={current?.current?.modalData?.firstName}
+          value={current?.context?.modalData?.firstName}
           onChange={(e) =>
             send("UPDATE_CREATE_FORM", {
               field: "firstName",
@@ -82,6 +92,7 @@ const FormFields: React.FC<FormFieldsProps> = ({ current, send }) => {
       <InputGroup className="mb-3 inputf">
         <InputGroup.Text id="basic-addon1">Last Name</InputGroup.Text>
         <input
+          disabled={isViewOnly}
           type="text"
           className="form-control"
           value={current?.context?.modalData?.lastName}
@@ -96,7 +107,11 @@ const FormFields: React.FC<FormFieldsProps> = ({ current, send }) => {
       <InputGroup className="mb-3 inputf">
         <InputGroup.Text id="basic-addon1">Billable?</InputGroup.Text>
         <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
+          <Dropdown.Toggle
+            disabled={isViewOnly}
+            variant="success"
+            id="dropdown-basic"
+          >
             {current.context.modalData.isBillable}
           </Dropdown.Toggle>
 
@@ -127,6 +142,7 @@ const FormFields: React.FC<FormFieldsProps> = ({ current, send }) => {
       <InputGroup className="mb-3 inputf">
         <InputGroup.Text id="basic-addon1">Billable Rate</InputGroup.Text>
         <input
+          disabled={isViewOnly}
           type="number"
           className="form-control"
           value={current?.context?.modalData?.billingRate}
@@ -141,6 +157,7 @@ const FormFields: React.FC<FormFieldsProps> = ({ current, send }) => {
       <InputGroup className="mb-3 inputf">
         <InputGroup.Text id="basic-addon1">Billable Rate</InputGroup.Text>
         <input
+          disabled={isViewOnly}
           type="number"
           className="form-control"
           value={current?.context?.modalData?.hours}

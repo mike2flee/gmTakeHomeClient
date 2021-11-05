@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import FormFields from "./FormFields";
 
@@ -11,23 +11,50 @@ const ClientInstaceModal: React.FC<ClientInstaceModalProps> = ({
   current,
   send,
 }) => {
+  const [isViewOnly, setIsViewOnly] = useState(false);
+
+  useEffect(() => {
+    setIsViewOnly(current.context.modalTitle === "Add Entity" ? false : true);
+  }, [current.context.modalTitle]);
+
   return (
     <Modal size="xl" show={current.context.isModalOpen}>
       <Modal.Header>
         <Modal.Title>{current.context.modalTitle}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <FormFields current={current} send={send}></FormFields>
+        <FormFields
+          isViewOnly={isViewOnly}
+          current={current}
+          send={send}
+        ></FormFields>
       </Modal.Body>
 
       <Modal.Footer>
-        <Button
-          variant="outline-secondary"
-          onClick={() => send("TOGGLE_MODAL", { title: "", modalData: {} })}
-        >
-          CANCEL
-        </Button>
-        <Button variant="primary">ADD</Button>
+        {!isViewOnly ? (
+          <>
+            <Button
+              variant="outline-secondary"
+              onClick={() =>
+                send("TOGGLE_MODAL", { title: " ", modalData: {} })
+              }
+            >
+              CANCEL
+            </Button>
+            <Button variant="primary">ADD</Button>
+          </>
+        ) : (
+          <>
+            <Button
+              variant="outline-secondary"
+              onClick={() =>
+                send("TOGGLE_MODAL", { title: " ", modalData: {} })
+              }
+            >
+              Close
+            </Button>
+          </>
+        )}
       </Modal.Footer>
     </Modal>
   );

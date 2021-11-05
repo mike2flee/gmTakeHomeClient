@@ -8,19 +8,29 @@ interface TableProps {
 }
 
 const Table: React.FC<TableProps> = ({ current, send }) => {
-  const rowData = [
-    { make: "Toyota", model: "Celica", price: 35000 },
-    { make: "Ford", model: "Mondeo", price: 32000 },
-    { make: "Porsche", model: "Boxter", price: 72000 },
-  ];
+  const defaultColDef = {
+    resizable: true,
+    autoHeight: true,
+    filter: true,
+    flex: 1,
+    sortable: true,
+  };
 
   const renderTable = () => {
     return (
       <div className="tableContainer ag-theme-alpine">
-        <AgGridReact rowData={rowData}>
-          <AgGridColumn field="make"></AgGridColumn>
-          <AgGridColumn field="model"></AgGridColumn>
-          <AgGridColumn field="price"></AgGridColumn>
+        <AgGridReact
+          onRowDoubleClicked={(e) =>
+            send("TOGGLE_MODAL", { title: "Entity Details", modalData: e.data })
+          }
+          rowData={current.context.timeSheetData}
+          defaultColDef={defaultColDef}
+        >
+          <AgGridColumn field="project"></AgGridColumn>
+          <AgGridColumn field="client"></AgGridColumn>
+          <AgGridColumn field="hours"></AgGridColumn>
+          <AgGridColumn field="billableHours"></AgGridColumn>
+          <AgGridColumn field="billableAmount"></AgGridColumn>
         </AgGridReact>
         ;
       </div>
