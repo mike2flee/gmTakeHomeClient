@@ -35,7 +35,6 @@ const Table: React.FC<TableProps> = ({ current, send }) => {
           <AgGridColumn field="billableHours"></AgGridColumn>
           <AgGridColumn field="billableAmount"></AgGridColumn>
         </AgGridReact>
-        ;
       </div>
     );
   };

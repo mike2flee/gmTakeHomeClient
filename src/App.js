@@ -1,11 +1,10 @@
 import React from "react";
+import { ToastContainer } from "react-toastify";
 import { HashRouter, Switch, Route } from "react-router-dom";
 import LandingPage from "./screens/landing";
-import "react-toastify/dist/ReactToastify.css";
-
-import "./assets/css/App.scss";
 import AppProvider from "./providers/AppProvider";
-import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./assets/css/App.scss";
 
 const App = () => {
   return (

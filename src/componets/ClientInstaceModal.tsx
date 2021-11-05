@@ -17,6 +17,23 @@ const ClientInstaceModal: React.FC<ClientInstaceModalProps> = ({
     setIsViewOnly(current.context.modalTitle === "Add Entity" ? false : true);
   }, [current.context.modalTitle]);
 
+  const isAddDisabled = () => {
+    if (
+      !current?.context?.modalData?.client ||
+      !current?.context?.modalData?.projectCode ||
+      !current?.context?.modalData?.project ||
+      !current?.context?.modalData?.date ||
+      !current?.context?.modalData?.firstName ||
+      !current?.context?.modalData?.lastName ||
+      !current?.context?.modalData?.isBillable ||
+      !current?.context?.modalData?.billingRate ||
+      !current?.context?.modalData?.hours
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <Modal size="xl" show={current.context.isModalOpen}>
       <Modal.Header>
@@ -42,6 +59,7 @@ const ClientInstaceModal: React.FC<ClientInstaceModalProps> = ({
               CANCEL
             </Button>
             <Button
+              disabled={isAddDisabled()}
               variant="primary"
               onClick={() =>
                 send("CREATE_NEW_INSTANCE", {
@@ -60,7 +78,7 @@ const ClientInstaceModal: React.FC<ClientInstaceModalProps> = ({
                 send("TOGGLE_MODAL", { title: " ", modalData: {} })
               }
             >
-              Close
+              CLOSE
             </Button>
           </>
         )}

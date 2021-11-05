@@ -149,6 +149,7 @@ const FormFields: React.FC<FormFieldsProps> = ({
         <input
           disabled={isViewOnly}
           type="number"
+          step={0.1}
           className="form-control"
           value={current?.context?.modalData?.billingRate}
           onChange={(e) =>
@@ -164,6 +165,7 @@ const FormFields: React.FC<FormFieldsProps> = ({
         <input
           disabled={isViewOnly}
           type="number"
+          step={0.1}
           className="form-control"
           value={current?.context?.modalData?.hours}
           onChange={(e) =>
