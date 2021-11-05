@@ -1,15 +1,13 @@
 @import "../global.scss";
 .billingRow {
-  display: flex;
-  flex-direction: row;
+  @extend .displayFlexRow;
   justify-content: flex-end;
   gap: 40px;
   margin-bottom: 20px;
   align-items: center;
 
   .billingItem {
-    display: flex;
-    flex-direction: row;
+    @extend .displayFlexRow;
     h4 {
       font-size: 18px;
       margin-right: 2px;

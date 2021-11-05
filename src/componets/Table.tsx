@@ -31,6 +31,7 @@ const Table: React.FC<TableProps> = ({ current, send }) => {
           <AgGridColumn field="project"></AgGridColumn>
           <AgGridColumn field="client"></AgGridColumn>
           <AgGridColumn field="hours"></AgGridColumn>
+          <AgGridColumn field="billingRate"></AgGridColumn>
           <AgGridColumn field="billableHours"></AgGridColumn>
           <AgGridColumn field="billableAmount"></AgGridColumn>
         </AgGridReact>

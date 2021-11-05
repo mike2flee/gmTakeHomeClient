@@ -1,6 +1,7 @@
 import { createMachine, assign, DoneEvent } from "xstate";
 import { toast } from "react-toastify";
 import { fetchJson } from "../shared/fetchJson";
+import { formatCurrency } from "../shared/utils";
 
 type AppEvents =
   | GetAllTimeSheetData
@@ -117,11 +118,12 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
         e.data.clientInstancePojoList.forEach((instance: any) => {
           if (instance.isBillable === "Yes") {
             instance.billableHours = instance.hours;
-            instance.billableAmount =
-              parseFloat(instance.hours) * parseFloat(instance.billingRate);
+            instance.billableAmount = `$ ${formatCurrency(
+              parseFloat(instance.hours) * parseFloat(instance.billingRate)
+            )}`;
           } else {
-            instance.billableHours = 0;
-            instance.billableAmount = 0;
+            instance.billableHours = "0";
+            instance.billableAmount = "_";
           }
           formattedClientInstances.push(instance);
         });
