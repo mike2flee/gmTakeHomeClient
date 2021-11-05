@@ -155,7 +155,7 @@ const FormFields: React.FC<FormFieldsProps> = ({
         />
       </InputGroup>
       <InputGroup className="mb-3 inputf">
-        <InputGroup.Text id="basic-addon1">Billable Rate</InputGroup.Text>
+        <InputGroup.Text id="basic-addon1">Billable Hours</InputGroup.Text>
         <input
           disabled={isViewOnly}
           type="number"

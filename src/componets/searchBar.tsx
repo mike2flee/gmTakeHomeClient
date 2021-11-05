@@ -17,13 +17,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ current, send }) => {
 
   return (
     <div className="searchBarContainer">
-      <img
-        src={magnify}
-        alt="Search Icon"
-        onClick={() =>
-          send("FIND_BY_CLIENT_NAME", { request: { clientName: clientName } })
-        }
-      />
       <input
         placeholder="Search by Client Names"
         type="text"
@@ -31,6 +24,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ current, send }) => {
         value={clientName}
         onChange={(e: any) => setClientName(e.target.value)}
         onKeyDown={(e) => handleKeyDown(e)}
+      />
+      <img
+        src={magnify}
+        alt="Search Icon"
+        onClick={() =>
+          send("FIND_BY_CLIENT_NAME", { request: { clientName: clientName } })
+        }
+        style={{ marginRight: "20px" }}
       />
       <img src={reset} alt="Reset Icon" onClick={() => send("GET_ALL")} />
     </div>
