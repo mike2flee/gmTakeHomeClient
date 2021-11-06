@@ -59,21 +59,26 @@ const FormFields: React.FC<FormFieldsProps> = ({
           }
         />
       </InputGroup>
-      <InputGroup className="mb-3 inputf">
-        <InputGroup.Text id="basic-addon1">Date</InputGroup.Text>
-        <input
-          disabled={isViewOnly}
-          type="date"
-          className="form-control"
-          value={current?.conext?.modalData?.date}
-          onChange={(e) =>
-            send("UPDATE_CREATE_FORM", {
-              field: "date",
-              value: e.target.value,
-            })
-          }
-        />
-      </InputGroup>
+      {!isViewOnly ? (
+        <InputGroup className="mb-3 inputf">
+          <InputGroup.Text id="basic-addon1">Date</InputGroup.Text>
+          <input
+            disabled={isViewOnly}
+            type="date"
+            className="form-control"
+            value={current?.conext?.modalData?.date}
+            onChange={(e) =>
+              send("UPDATE_CREATE_FORM", {
+                field: "date",
+                value: e.target.value,
+              })
+            }
+          />
+        </InputGroup>
+      ) : (
+        <></>
+      )}
+
       <InputGroup className="mb-3 inputf">
         <InputGroup.Text id="basic-addon1">First Name</InputGroup.Text>
         <input
@@ -144,6 +149,7 @@ const FormFields: React.FC<FormFieldsProps> = ({
         <input
           disabled={isViewOnly}
           type="number"
+          step={0.1}
           className="form-control"
           value={current?.context?.modalData?.billingRate}
           onChange={(e) =>
@@ -159,6 +165,7 @@ const FormFields: React.FC<FormFieldsProps> = ({
         <input
           disabled={isViewOnly}
           type="number"
+          step={0.1}
           className="form-control"
           value={current?.context?.modalData?.hours}
           onChange={(e) =>

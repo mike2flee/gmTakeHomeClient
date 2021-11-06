@@ -1,8 +1,7 @@
 @import "../global.scss";
 
 .searchBarContainer {
-  display: flex;
-  flex-direction: row;
+  @extend .displayFlexRow;
   width: 30%;
   padding: 10px;
   background-color: white;
