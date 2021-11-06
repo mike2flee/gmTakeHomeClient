@@ -1,7 +1,7 @@
 import { createMachine, assign, DoneEvent } from "xstate";
 import { toast } from "react-toastify";
 import { fetchJson } from "../shared/fetchJson";
-import { formatCurrency } from "../shared/utils";
+import { decimalFormat } from "../shared/utils";
 
 type AppEvents =
   | GetAllTimeSheetData
@@ -131,7 +131,7 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
         e.data.clientInstancePojoList.forEach((instance: any) => {
           if (instance.isBillable === "Yes") {
             instance.billableHours = instance.hours;
-            instance.billableAmount = `$ ${formatCurrency(
+            instance.billableAmount = `$ ${decimalFormat(
               parseFloat(instance.hours) * parseFloat(instance.billingRate)
             )}`;
             totalHoursTracked += parseFloat(instance.hours);
@@ -147,8 +147,8 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
           ...context,
           timeSheetData: formattedClientInstances,
           shouldReset: false,
-          totalBillableAmount: `$ ${formatCurrency(totalBillableAmount)}`,
-          totalHoursTracked: `${formatCurrency(totalHoursTracked)}`,
+          totalBillableAmount: `$ ${decimalFormat(totalBillableAmount)}`,
+          totalHoursTracked: `${decimalFormat(totalHoursTracked)}`,
         };
       }),
       flashError: (context, event) => {
