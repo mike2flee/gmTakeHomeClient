@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import SearchBar from "../../componets/SearchBar";
+import SearchBar from "../../componets/searchBar";
 import { AppContext } from "../../providers/AppProvider";
 import addIcon from "../../assets/images/addIcon.png";
 import ClientInstaceModal from "../../componets/ClientInstaceModal";
