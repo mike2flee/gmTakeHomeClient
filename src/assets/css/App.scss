@@ -1,8 +1,74 @@
+@import "~bootstrap/scss/bootstrap";
+@import "./global.scss";
+@import "components/searchBar";
+@import "components/table";
+@import "components/modal";
+@import "components/billingSummary";
+
 * {
   margin: 0;
   padding: 0;
 }
-.appContainer {
-  background-color: chartreuse;
+.mainHeader {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  gap: 20px;
+  background-color: #1f5673;
   padding: 20px;
+
+  img {
+    width: 40px;
+    height: 40px;
+  }
+
+  h1 {
+    color: white;
+  }
+}
+
+.landingPageContainer {
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  padding: 40px;
+  padding-top: 40px;
+
+  .optionRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .addIcon {
+      height: 50px;
+    }
+    .addIcon:hover {
+      @extend .hoverStyle;
+    }
+    .addIcon:active {
+      @extend .activeClickStyle;
+    }
+  }
+  .loadingContainer {
+    display: flex;
+    height: 500px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  .filter-green {
+    filter: invert(46%) sepia(26%) saturate(4782%) hue-rotate(163deg)
+      brightness(97%) contrast(103%);
+  }
+
+  .ag-theme-alpine {
+    .ag-cell {
+      line-height: 35px;
+      font-size: 12px;
+    }
+    .ag-row:hover {
+      background-color: #f2e2ba;
+    }
+  }
 }
