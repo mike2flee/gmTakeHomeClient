@@ -109,10 +109,9 @@ const appMachine = createMachine<AppMachineContextProps, AppEvents>(
         fetchJson("http://localhost:8080/timesheetApi/getAll"),
       findClientByName: (context, event) => {
         const { request } = event as FindByClientName;
-        return fetchJson("http://localhost:8080/timesheetApi/findByClient", {
-          method: "POST",
-          body: JSON.stringify(request),
-        });
+        return fetchJson(
+          `http://localhost:8080/timesheetApi/findByClient/?clientName=${request.clientName}`
+        );
       },
       creatingNewClientRow: (context, event) => {
         const { request } = event as CreateClientInstance;
