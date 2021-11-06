@@ -3,13 +3,23 @@
 
 **Version 0.1.0**
 
-The purpose of this project is to act as the front end client facing applicaiton to ().
+This is the frontend application for Michael's Giant Machines take home project.
+[Link to the the service code](https://github.com/mike2flee/takeHomeService).
 
 ## Key Features
 - The ability to fech all results
 - Search for results by client's name
 - Create a new client instance
 - Export results into CSV file
+
+## Prerequisite
+
+Ensure that both yarn and node are installed.
+
+**Node & Yarn installation**
+- [Node](https://nodejs.org/en/download/)
+- [yarn](https://classic.yarnpkg.com/en/docs/cli/install/)
+
 
 ## Installation & Start
 
@@ -26,12 +36,15 @@ git clone https://github.com/mike2flee/gmTakeHomeClient
 ```bash
 yarn install
 ```
+4. Ensure that the [backend application](https://github.com/mike2flee/takeHomeService) is up and running
 
-4. Star application with
+5. Star application with
 
 ```bash
 yarn start
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+6. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+
 
