@@ -31,6 +31,10 @@ git clone https://github.com/mike2flee/gmTakeHomeClient
 
 2. Navigate to the root of the project
 
+```bash
+cd gmTakeHomeClient
+```
+
 3. Install packages with:
 
 ```bash
